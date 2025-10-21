@@ -190,6 +190,7 @@ heyCell_allData %>%
 ########################### saving figures
 ggsave(heyCell_dose_dependentInternalization, file = "heyCell_dose_dependentInternalization_1h.pdf", width = 3, height = 5, units = "in", path = "figures/fig_1/")
 ########################### Clean up
+rm(heyCell_allData, heyCell_dose_dependentInternalization)
 
 
 

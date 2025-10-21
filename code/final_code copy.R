@@ -196,25 +196,21 @@ ggsave(heyCell_dose_dependentInternalization, file = "heyCell_dose_dependentInte
 
 ########################### Figure 2a-c & Supp Fig 7   ###########################
 ########################### description cell internalization and mechanism of entry
-
-########################### load dependencies
-########################### Custom Functions
-########################### Load Data
-heyCell_allData <- read_excel("data/figure_5/heyCell_allData.xlsx", 
+########################### load data
+heyCell_allData <- read_excel("data/fig_2/heyCell_allData.xlsx", 
                               na = "NA")
 
 ########################### Data Wrangling
 heyCell_allData$ngConcen_mgML <- factor(heyCell_allData$ngConcen_mgML, levels=c('3', '1.5', '0.75', '0.375'))
-
 ########################### quick visualization
 
 ## sodium-azide-dependent internalization
 heyCell_ATPdependent<-heyCell_allData %>% 
   filter(inhibitor == 'Sodium Azide') %>%
-  filter(objective == '63x') %>%
+  # filter(objective == '63x') %>%
   filter(inhibitorConcen == 0 & mean > 2 | inhibitorConcen == 50) %>%
   ggbarplot( x = "inhibitorConcen", y = "mean",
-             add = c("mean_se"),
+             add = c("mean_se", "jitter"),
              color = "black",
              fill = "inhibitorConcen",
              palette = "Blues",
@@ -222,11 +218,7 @@ heyCell_ATPdependent<-heyCell_allData %>%
              add.params = list(size = .4),
              position = position_dodge(0.4),
   )+
-  theme(legend.position = "none")+
-  # stat_compare_means(aes(group = ngConcen_mgML), label = "p.signif", label.y = 20)
-  stat_compare_means(label.y = 7) +                                         # Global p-value
-  stat_compare_means(ref.group = "0", label = "p.signif",
-                     label.y = c(5.5, 3.5))
+  theme(legend.position = "none")
 
 
 heyCell_LatA<-heyCell_allData %>% 
@@ -235,7 +227,7 @@ heyCell_LatA<-heyCell_allData %>%
   filter(intDen < 40000) %>%
   # filter(inhibitorConcen == 0 | inhibitorConcen == 1|  inhibitorConcen == 2) %>%
   ggbarplot( x = "inhibitorConcen", y = "mean",
-             add = c("mean_se"),
+             add = c("mean_se", "jitter"),
              color = "black",
              fill = "inhibitorConcen",
              palette = "Blues",
@@ -243,11 +235,7 @@ heyCell_LatA<-heyCell_allData %>%
              add.params = list(size = .4),
              position = position_dodge(0.4),
   )+
-  theme(legend.position = "none")+
-  # stat_compare_means(aes(group = ngConcen_mgML), label = "p.signif", label.y = 20)
-  stat_compare_means(label.y = 15) +                                         # Global p-value
-  stat_compare_means(ref.group = "0", label = "p.signif",
-                     label.y = c(10, 10))
+  theme(legend.position = "none")
 
 
 heyCell_cytoD<-heyCell_allData %>% 
@@ -256,7 +244,7 @@ heyCell_cytoD<-heyCell_allData %>%
   filter(intDen < 40000) %>%
   # filter(inhibitorConcen == 0 | inhibitorConcen == 2|  inhibitorConcen == 4) %>%
   ggbarplot( x = "inhibitorConcen", y = "mean",
-             add = c("mean_se"),
+             add = c("mean_se", "jitter"),
              color = "black",
              fill = "inhibitorConcen",
              palette = "Blues",
@@ -264,43 +252,15 @@ heyCell_cytoD<-heyCell_allData %>%
              add.params = list(size = .4),
              position = position_dodge(0.4),
   )+
-  theme(legend.position = "none")+
-  # stat_compare_means(aes(group = ngConcen_mgML), label = "p.signif", label.y = 20)
-  stat_compare_means(label.y = 15) +                                         # Global p-value
-  stat_compare_means(ref.group = "0", label = "p.signif",
-                     label.y = c(10, 10))
-
-
-heyCell_Cpz<-heyCell_allData %>% 
-  filter(inhibitor == 'Cpz') %>%
-  filter(objective == '20x') %>%
-  filter(intDen < 40000) %>%
-  # filter(inhibitorConcen == 0 | inhibitorConcen == 50|  inhibitorConcen == 100) %>%
-  ggbarplot( x = "inhibitorConcen", y = "mean",
-             add = c("mean_se"),
-             color = "black",
-             fill = "inhibitorConcen",
-             palette = "Blues",
-             width = 0.41,
-             add.params = list(size = .4),
-             position = position_dodge(0.4),
-  )+
-  theme(legend.position = "none")+
-  # stat_compare_means(aes(group = ngConcen_mgML), label = "p.signif", label.y = 20)
-  stat_compare_means(label.y = 15) +                                         # Global p-value
-  stat_compare_means(ref.group = "0", label = "p.signif",
-                     label.y = c(11, 11))
+  theme(legend.position = "none")
 
 
 heyCell_Cpz<-heyCell_allData %>% 
   filter(inhibitor == 'Cpz') %>%
   filter(objective == '20x') %>%
   mutate_at(vars("intDen"), funs(./1000)) %>%
-  
-  # filter(intDen < 40000) %>%
-  # filter(inhibitorConcen == 0 | inhibitorConcen == 100|  inhibitorConcen == 200) %>%
-  ggbarplot( x = "inhibitorConcen", y = "intDen",
-             add = c("mean_se"),
+    ggbarplot( x = "inhibitorConcen", y = "intDen",
+             add = c("mean_se", "jitter"),
              color = "black",
              fill = "inhibitorConcen",
              palette = "Blues",
@@ -308,11 +268,7 @@ heyCell_Cpz<-heyCell_allData %>%
              add.params = list(size = .4),
              position = position_dodge(0.4),
   )+
-  theme(legend.position = "none")+
-  # stat_compare_means(aes(group = ngConcen_mgML), label = "p.signif", label.y = 20)
-  stat_compare_means(label.y = 15) +                                         # Global p-value
-  stat_compare_means(ref.group = "0", label = "p.signif",
-                     label.y = c(11, 11))
+  theme(legend.position = "none")
 
 heyCell_MBcd<-heyCell_allData %>% 
   filter(inhibitor == 'MBcd') %>%
@@ -320,7 +276,7 @@ heyCell_MBcd<-heyCell_allData %>%
   filter(intDen < 30000) %>%
   # filter(inhibitorConcen == 0 | inhibitorConcen == 0.5| inhibitorConcen == 1) %>%
   ggbarplot( x = "inhibitorConcen", y = "mean",
-             add = c("mean_se"),
+             add = c("mean_se", "jitter"),
              color = "black",
              fill = "inhibitorConcen",
              palette = "Blues",
@@ -328,16 +284,8 @@ heyCell_MBcd<-heyCell_allData %>%
              add.params = list(size = .4),
              position = position_dodge(0.4),
   )+
-  theme(legend.position = "none")+
-  # stat_compare_means(aes(group = ngConcen_mgML), label = "p.signif", label.y = 20)
-  stat_compare_means(label.y = 15) +                                         # Global p-value
-  stat_compare_means(ref.group = "0", label = "p.signif",
-                     label.y = c(11, 11))
-
-
-
+  theme(legend.position = "none")
 ########################### analyses/modeling
-
 heyCell_allData %>% 
   filter(inhibitor == 'Sodium Azide') %>%
   # filter(objective == '63x') %>%
@@ -358,36 +306,12 @@ heyCell_allData %>%
   # filter(inhibitorConcen == 0 & mean > 2 | inhibitorConcen == 50) %>%
   group_by(inhibitorConcen) %>%
   summarise(n=n())
-  
-########################### saving data
 ########################### saving figures
-
-setwd(file.path(mainDir,figDir,suppFigFolder))
-
-
-cairo_pdf("heyCell_ATPdependent.pdf", width = 1.5, height = 3)
-heyCell_ATPdependent
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
-
-cairo_pdf("heyCell_LatA.pdf", width = 1.5, height = 3)
-heyCell_LatA
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
-cairo_pdf("heyCell_cytoD.pdf", width = 1.5, height = 3)
-heyCell_cytoD
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
-cairo_pdf("heyCell_Cpz.pdf", width = 1.5, height = 3)
-heyCell_Cpz
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
-
-cairo_pdf("heyCell_MBcd.pdf", width = 1.5, height = 3)
-heyCell_MBcd
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
-
+ggsave(heyCell_ATPdependent, file = "heyCell_ATPdependent_2a.pdf", width = 1.5, height = 3, units = "in", path = "figures/fig_2")
+ggsave(heyCell_Cpz, file = "heyCell_Cpz_2b.pdf", width = 1.5, height = 3, units = "in", path = "figures/fig_2")
+ggsave(heyCell_cytoD, file = "heyCell_cytoD_2c.pdf", width = 1.5, height = 3, units = "in", path = "figures/fig_2")
+ggsave(heyCell_MBcd, file = "heyCell_MBcd_supp_fig_5.pdf", width = 1.5, height = 3, units = "in", path = "figures/supp_figs/")
+ggsave(heyCell_LatA, file = "heyCell_LatA__supp_fig_5.pdf", width = 1.5, height = 3, units = "in", path = "figures/supp_figs/")
 ########################### Clean up
 
 
