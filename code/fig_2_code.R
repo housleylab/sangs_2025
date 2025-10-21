@@ -150,7 +150,7 @@ ggsave(heyCell_cytoD, file = "heyCell_cytoD_2c.pdf", width = 1.5, height = 3, un
 ggsave(heyCell_MBcd, file = "heyCell_MBcd_supp_fig_5.pdf", width = 1.5, height = 3, units = "in", path = "figures/supp_figs/")
 ggsave(heyCell_LatA, file = "heyCell_LatA__supp_fig_5.pdf", width = 1.5, height = 3, units = "in", path = "figures/supp_figs/")
 ########################### Clean up
-rm(heyCell_ATPdependent, heyCell_Cpz, heyCell_cytoD, heyCell_LatA, heyCell_MBcd)
+rm(heyCell_ATPdependent, heyCell_Cpz, heyCell_cytoD, heyCell_LatA, heyCell_MBcd, heyCell_allData)
 
 
 ########################### Figure 2g  ###########################
@@ -211,11 +211,12 @@ sirnaEndosomColoc_allData %>%
 ########################### saving figures
 ggsave(siRNA_endosome_Fig, file = "siRNA_endosome_Fig_2g.pdf", width = 5, height = 3, units = "in", path = "figures/fig_2")
 ########################### Clean up
+rm(siRNA_endosome_Fig, sirnaEndosomColoc_allData)
 
 
 
 
-########################### Figure 5 siRNA release ###########################
+########################### Figure 2h siRNA release ###########################
 
 ########################### load dependencies
 ########################### Custom Functions
@@ -245,11 +246,46 @@ siRNA_sang_Fig<- heyCellsiRNAsangsCOLOC_allData %>%
   )
 ########################### saving figures
 ggsave(siRNA_sang_Fig, file = "siRNA_sang_Fig_2h.pdf", width = 3, height = 4, units = "in", path = "figures/fig_2")
+########################### Clean up
+rm(siRNA_endosome_Fig, heyCellsiRNAsangsCOLOC_allData, siRNA_sang_Fig)
 
 
 
+########################### Figure 2i RNA knockdown in vitro ###########################
+
+########################### load data
+rtPCR_data <- read_excel("data/fig_2/rtPCR_data.xlsx", 
+                         na = "NA")
+########################### quick visualization
+inVitroSANGexpression<-rtPCR_data %>% 
+  filter(experiment == 'culture') %>%
+  # filter(treatment == 'zeb1') %>%
+  ggbarplot( x = "group", y = "fold_change",
+             add = c("mean_se", "jitter"),
+             color = "black",
+             fill = "group",
+             palette = "Blues",
+             width = 0.8,
+             add.params = list(size = .4),
+             position = position_dodge(0.4),
+             facet.by = "treatment"
+  )
+########################### analyses/modeling
+rtPCR_data %>% 
+  filter(experiment == 'in_vivo') %>%
+  group_by(group)%>%
+  summarise(mean= mean(fold_change),
+            sd = sd(fold_change))
+
+cohensD = (1-0.540)/(sqrt((0.116^2+0.124^2)/2))
+########################### saving figures
+ggsave(inVitroSANGexpression, file = "inVitroSANGexpression.pdf", width = 4, height = 4, units = "in", path = "figures/fig_2")
+########################### Clean up
+rm(siRNA_endosome_Fig, heyCellsiRNAsangsCOLOC_allData, siRNA_sang_Fig)
 
 
+
+########################### Clean up
 
 
 
