@@ -1,10 +1,9 @@
-###### Tumor Agnostic Drug Delivery with Self-Agglomerating Nanohydrogels (SANGs) 
+###### Housley et al 2025. Tumor Agnostic Drug Delivery with Dynamic Nanohydrogels
 
 ########################### ReadME begin ########################### 
 # Version of April 5, 2023.
 # Stephen N. Housley 
-# housley.nick@gmail.com
-# 
+# nickhousley@gatech.edu
 
 # This work is licensed under the licenses 
 # Paper: Creative Commons Attribution 3.0 Unported License 
@@ -12,42 +11,33 @@
 # Depends: R (>= 3.5.0)
 # Version: 0.1
 # Description: code to run analytics and graphic functions associated with:
-#         tumor agnostic delivery
-#
+#         Housley et al 2025. Tumor Agnostic Drug Delivery with Dynamic Nanohydrogels Nature Communications
+#         
 # This program is believed to be free of errors, but it comes with no guarantee! 
 # The user bears all responsibility for interpreting the results. 
 
 ## version Hx
 # v0.1- original April 5, 2023.
-# v1.1- original Mayt 5, 2024. - publish to github
+# v1.1- original May 5, 2024. - publish to github
+# v1.2- original Oct 21, 2025. - publish to github
 
-
-
-# paths must be changed to accommodate end user file structure (e.g. line 58)
-# run on MacOS 14.1 (23B2073)
-
+# paths must be changed to accommodate end user file structure (e.g. line 59)
+# run on MacOS 14.6.1 
 
 ########################### ReadME end ########################### 
 
-
-
 ##### begin TEMPLATE##### 
-
-
 ########################### Figure ZZZZ ###########################
 ########################### description
-
 ########################### load dependencies
-########################### Custom Functions
-########################### Load Data
-########################### Data Wrangling
+########################### custom functions
+########################### load data
+########################### data wrangling
 ########################### quick visualization
 ########################### analyses/modeling
 ########################### saving data
 ########################### saving figures
 ########################### Clean up
-
-
 ##### end TEMPLATE #####
 
 
@@ -59,23 +49,19 @@ setwd("~/GaTech Dropbox/CoS/BioSci/BioSci-Housley_Lab/04-papers/nature_comm/sang
 
 ########################### load general dependencies ########################### 
 source("code/load_gen_dependencies.R")
+rm(package.check)
 
 
 ########################### Figure 1d  ###########################
 ########################### description
 # dls size distribution over batches
-
-########################### load dependencies
-
-########################### Custom Functions
 ########################### Load Data
 dls_ng_size <- read_excel("data/fig_1/dls_ng_size_batches_shell_core.xlsx",  na = "NA") 
 
-########################### Data Wrangling
+########################### data wrangling
 dls_ng_size$batch <- factor(dls_ng_size$batch)
 dls_ng_size$index <- 'dls'
-
-########################### quick visualization
+########################### visualization
 dls_batch_size_fig<-dls_ng_size %>% filter(use == "yes") %>%
   ggplot(aes(x = batch, y = Peak2_rad_nm*2, fill = core_shell)) +
   introdataviz::geom_split_violin(alpha = .4, trim = FALSE) +
@@ -88,45 +74,29 @@ dls_batch_size_fig<-dls_ng_size %>% filter(use == "yes") %>%
                      limits = c(60, 160)) +
   scale_fill_brewer(palette = "Blues", name = "Batch") +
   theme_minimal()
-
 ########################### analyses/modeling
-
 dls_ng_size %>% 
   filter(use == "yes") %>%
   group_by(core_shell) %>%
   summarise(meanDiameter = mean(Peak2_rad_nm*2),
             sdDiameter = sd(Peak2_rad_nm*2)
             )
-
-########################### saving data
 ########################### saving figures
-
 ggsave(dls_batch_size_fig, file = "dls_batch_size_fig_1d.pdf", width = 6, height = 4, units = "in", path = "figures/fig_1/")
-
-
 ########################### Clean up
+rm(dls_ng_size, dls_batch_size_fig)
+
 
 
 ########################### Figure 1e  ###########################
 ########################### description
 # dls size distribution over time and temps
-
-########################### load dependencies
-
-########################### Custom Functions
 ########################### Load Data
-
 dls_ng_size_overTime <- read_excel("data/fig_1/dls_ng_size_overTime.xlsx",  na = "NA") 
-
-
 ########################### Data Wrangling
-
 dls_ng_size_overTime$temp <- factor(dls_ng_size_overTime$temp)
 dls_ng_size_overTime$loadingStatus <- factor(dls_ng_size_overTime$loadingStatus)
-
-
-########################### quick visualization
-
+########################### visualization
 dls_ng_size_overTime_fig<- ggplot(dls_ng_size_overTime, aes(x = time, y = percentChange, group = loadingStatus, colour = temp)) +
   theme_bw() +
   # geom_line() +
@@ -136,58 +106,33 @@ dls_ng_size_overTime_fig<- ggplot(dls_ng_size_overTime, aes(x = time, y = percen
   ylim(-25,25)+
   theme_classic()+
   scale_color_brewer(palette = "Blues")
-
 ########################### analyses/modeling
-
 dls_ng_size_overTime %>% 
   group_by(loadingStatus, time) %>%
   summarise(n= n()
   )
-
-########################### saving data
 ########################### saving figures
-
 ggsave(dls_ng_size_overTime_fig, file = "dls_ng_size_overTime_fig_1e.pdf", width = 6, height = 4, units = "in", path = "figures/fig_1/")
-
 ########################### Clean up
+rm(dls_ng_size_overTime, dls_ng_size_overTime_fig)
 
 
 ########################### Figure 1f ###########################
 ########################### description
 # viability in vitro 
-########################### load dependencies
-########################### Custom Functions
-########################### Load Data
-viability_data <- read_excel("data/figure_1/viability.xlsx", 
+########################### load data
+viability_data <- read_excel("data/fig_1/viability.xlsx", 
                              na = "NA")
-
-########################### Data Wrangling
+########################### data wrangling
 viability_data$treatment <- as.factor(viability_data$treatment)
 viability_data$group <- as.factor(viability_data$group)
 viability_data$sample <- as.factor(viability_data$sample)
 viability_data$parameter <- as.factor(viability_data$parameter)
-
-########################### quick visualization
-# 
-# rtPCR_data %>% 
-#   filter(experiment == 'in_vivo') %>%
-#   filter(treatment == 'kras') %>%
-#   filter(species == 'mouse') %>%
-#   ggbarplot( x = "group", y = "fold_change",
-#              add = c("mean_se"),
-#              color = "black",
-#              fill = "dose",
-#              palette = "Blues",
-#              width = 0.3,
-#              add.params = list(size = .4),
-#              position = position_dodge(0.4),
-#   )
-
-
+########################### visualization
 viability_fig <-viability_data %>% 
-  # filter(treatment == 'kras') %>%
+  filter(parameter == 'viability') %>%
   ggbarplot( x = "group", y = "values",
-             add = c("mean_se"),
+             add = c("mean_se", "jitter"),
              color = "black",
              fill = "group",
              palette = "Blues",
@@ -197,60 +142,33 @@ viability_fig <-viability_data %>%
              facet.by = "parameter"
              
   )
-
-viability_fig<- facet(viability_fig, facet.by = "parameter", scales = "free_y")
-
+# viability_fig<- facet(viability_fig, facet.by = "parameter", scales = "free_y")
 ########################### analyses/modeling
-
 viability_data %>% 
   group_by(group, parameter) %>%
   summarise(n= n()
   )
-
-########################### saving data
 ########################### saving figures
-setwd(file.path(mainDir,figDir,figFolder))
-
-
-cairo_pdf("viability_fig.pdf", width = 5, height = 4)
-viability_fig
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
-
-
+ggsave(viability_fig, file = "viability_fig_1f.pdf", width = 4, height = 4, units = "in", path = "figures/fig_1/")
 ########################### Clean up
-
-
-
-
-
+rm(viability_data, viability_fig)
 
 
 
 ########################### Figure 1h  ###########################
 ########################### description
 # cell internalization
-########################### load dependencies
-########################### Custom Functions
-########################### Load Data
-heyCell_allData <- read_excel("data/figure_5/heyCell_allData.xlsx", 
+########################### load data
+heyCell_allData <- read_excel("data/fig_1/heyCell_allData.xlsx", 
                               na = "NA")
-
-########################### Data Wrangling
+########################### data wrangling
 heyCell_allData$ngConcen_mgML <- factor(heyCell_allData$ngConcen_mgML, levels=c('3', '1.5', '0.75', '0.375'))
-
-########################### quick visualization
-
-## concentration-dependent internalization
+########################### visualization
 heyCell_dose_dependentInternalization<-heyCell_allData %>% 
   filter(inhibitor == 'na') %>%
   filter(objective == '20x') %>%
-  # filter(intDen < 40000) %>%
-  # filter(inhibitorConcen == 0 | inhibitorConcen == 4) %>%
-  # group_by(inhibitorConcen) %>%
-  
   ggbarplot( x = "ngConcen_mgML", y = "mean",
-             add = c("mean_se"),
+             add = c("mean_se", "jitter"),
              color = "black",
              fill = "ngConcen_mgML",
              palette = "Blues",
@@ -258,31 +176,19 @@ heyCell_dose_dependentInternalization<-heyCell_allData %>%
              add.params = list(size = .4),
              position = position_dodge(0.4),
   )+
-  theme(legend.position = "none")+
-  # stat_compare_means(aes(group = ngConcen_mgML), label = "p.signif", label.y = 20)
-  stat_compare_means(label.y = 7) +                                         # Global p-value
-  stat_compare_means(ref.group = "3", label = "p.signif",
-                     label.y = c(4.5, 3.5, 2.5))
-
-
-
-
+  theme(legend.position = "none")
+  # stat_compare_means(label.y = 7) +                                         # Global p-value
+  # stat_compare_means(ref.group = "3", label = "p.signif",
+  #                    label.y = c(4.5, 3.5, 2.5))
 ########################### analyses/modeling
 heyCell_allData %>% 
   filter(inhibitor == 'na') %>%
   filter(objective == '20x') %>%
   group_by(ngConcen_mgML) %>%
   summarise(n=n())
-
 ########################### saving data
 ########################### saving figures
-setwd(file.path(mainDir,figDir,figFolder))
-
-cairo_pdf("heyCell_dose_dependentInternalization.pdf", width = 1.5, height = 3)
-heyCell_dose_dependentInternalization
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
-
+ggsave(heyCell_dose_dependentInternalization, file = "heyCell_dose_dependentInternalization_1h.pdf", width = 3, height = 5, units = "in", path = "figures/fig_1/")
 ########################### Clean up
 
 
