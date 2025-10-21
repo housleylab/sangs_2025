@@ -101,20 +101,10 @@ dls_ng_size %>%
 ########################### saving data
 ########################### saving figures
 
-setwd(file.path(mainDir,figDir,figFolder))
-
-cairo_pdf("dls_batch_size_fig.pdf", width = 6, height = 4)
-dls_batch_size_fig
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
-ggsave(dls_batch_size_fig, file = "dls_batch_size_fig.pdf", width = 6, height = 4, units = "in", path = "figures/fig_1/")
+ggsave(dls_batch_size_fig, file = "dls_batch_size_fig_1d.pdf", width = 6, height = 4, units = "in", path = "figures/fig_1/")
 
 
 ########################### Clean up
-
-
-
-
 
 
 ########################### Figure 1e  ###########################
@@ -126,7 +116,7 @@ ggsave(dls_batch_size_fig, file = "dls_batch_size_fig.pdf", width = 6, height = 
 ########################### Custom Functions
 ########################### Load Data
 
-dls_ng_size_overTime <- read_excel("data/figure_1/dls_ng_size_overTime.xlsx",  na = "NA") 
+dls_ng_size_overTime <- read_excel("data/fig_1/dls_ng_size_overTime.xlsx",  na = "NA") 
 
 
 ########################### Data Wrangling
@@ -137,16 +127,15 @@ dls_ng_size_overTime$loadingStatus <- factor(dls_ng_size_overTime$loadingStatus)
 
 ########################### quick visualization
 
-dls_ng_size_overTime_fig<- ggplot(dls_ng_size_overTime, aes(x = time, y = percentChange, colour = loadingStatus)) +
+dls_ng_size_overTime_fig<- ggplot(dls_ng_size_overTime, aes(x = time, y = percentChange, group = loadingStatus, colour = temp)) +
   theme_bw() +
-  geom_line() +
+  # geom_line() +
+  geom_line(aes(linetype = loadingStatus))+
   geom_point()+
   facet_grid(. ~temp, scale = "free_y")+
   ylim(-25,25)+
   theme_classic()+
   scale_color_brewer(palette = "Blues")
-
-
 
 ########################### analyses/modeling
 
@@ -158,12 +147,7 @@ dls_ng_size_overTime %>%
 ########################### saving data
 ########################### saving figures
 
-setwd(file.path(mainDir,figDir,figFolder))
-
-cairo_pdf("dls_ng_size_overTime_fig.pdf", width = 6, height = 4)
-dls_ng_size_overTime_fig
-invisible(suppressMessages(suppressWarnings(dev.off())))
-
+ggsave(dls_ng_size_overTime_fig, file = "dls_ng_size_overTime_fig_1e.pdf", width = 6, height = 4, units = "in", path = "figures/fig_1/")
 
 ########################### Clean up
 
