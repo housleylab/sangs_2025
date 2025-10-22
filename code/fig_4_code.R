@@ -150,4 +150,4 @@ figure4f<-
 ggsave(figure4c, file = "figure4c.pdf", width = 6, height = 6, units = "in", path = "figures/fig_4/")
 ggsave(figure4f, file = "figure4f.pdf", width = 6, height = 6, units = "in", path = "figures/fig_4/")
 ########################### clean up
-rm(figure4c, figure4f, biodist_rat_crc_mean, biodist_rat_crc)
+rm(figure4c, figure4f, biodist_rat_crc_mean, biodist_rat_crc, biodist_rat_lung)
