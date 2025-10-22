@@ -50,102 +50,127 @@ setwd("~/GaTech Dropbox/CoS/BioSci/BioSci-Housley_Lab/04-papers/nature_comm/sang
 ########################### load general dependencies ########################### 
 source("code/load_gen_dependencies.R")
 rm(package.check)
+########################### Custom Functions 
+summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE, conf.interval=.95) {
+  library(doBy)
+  
+  # New version of length which can handle NA's: if na.rm==T, don't count them
+  length2 <- function (x, na.rm=FALSE) {
+    if (na.rm) sum(!is.na(x))
+    else       length(x)
+  }
+  
+  # Collapse the data
+  formula <- as.formula(paste(measurevar, paste(groupvars, collapse=" + "), sep=" ~ "))
+  datac <- summaryBy(formula, data=data, FUN=c(length2,mean,sd), na.rm=na.rm)
+  
+  # Rename columns
+  names(datac)[ names(datac) == paste(measurevar, ".mean",    sep="") ] <- measurevar
+  names(datac)[ names(datac) == paste(measurevar, ".sd",      sep="") ] <- "sd"
+  names(datac)[ names(datac) == paste(measurevar, ".length2", sep="") ] <- "N"
+  
+  datac$se <- datac$sd / sqrt(datac$N)  # Calculate standard error of the mean
+  
+  # Confidence interval multiplier for standard error
+  # Calculate t-statistic for confidence interval: 
+  # e.g., if conf.interval is .95, use .975 (above/below), and use df=N-1
+  ciMult <- qt(conf.interval/2 + .5, datac$N-1)
+  datac$ci <- datac$se * ciMult
+  
+  return(datac)
+}
+
+
+data_summary <- function(x) {
+  m <- mean(x)
+  ymin <- m-sd(x)
+  ymax <- m+sd(x)
+  return(c(y=m,ymin=ymin,ymax=ymax))
+}
+
+scale_values <- function(x){(x-min(x))/(max(x)-min(x))}
+
 
 ########################### Figure 2a-c & Supp Fig 7   ###########################
 ########################### description cell internalization and mechanism of entry
 ########################### load data
-heyCell_allData <- read_excel("data/fig_2/heyCell_allData.xlsx", 
-                              na = "NA")
+biodist_mouse_oc <- read_excel("data/fig_3/raw_organ_biodistribution_mouse.xlsx", 
+                               na = c("NA", "QNS"))
 
 ########################### Data Wrangling
-heyCell_allData$ngConcen_mgML <- factor(heyCell_allData$ngConcen_mgML, levels=c('3', '1.5', '0.75', '0.375'))
-########################### quick visualization
+biodist_mouse_oc <- biodist_mouse_oc %>% filter(use == "yes")
+biodist_mouse_oc$scaledTotalRadiance <- scale_values(biodist_mouse_oc$total_radiance_efficency)
+biodist_mouse_oc$tissue <- as.factor(biodist_mouse_oc$tissue)
+biodist_mouse_oc$time_hrs <- factor(biodist_mouse_oc$time_hrs, levels=c('control', '4', '24', '48','72', '288'))
+biodist_mouse_oc$tissue <- factor(biodist_mouse_oc$tissue, levels=c('ovarian_tumor','spleen_mets', 'liver_mets', 'kidney_mets','gi_mets',
+                                                                    'liver', 'kidney','spleen', 'heart',   'lungs','fat', 'muscle',
+                                                                    'gi_healthy'))
 
-## sodium-azide-dependent internalization
-heyCell_ATPdependent<-heyCell_allData %>% 
-  filter(inhibitor == 'Sodium Azide') %>%
-  # filter(objective == '63x') %>%
-  filter(inhibitorConcen == 0 & mean > 2 | inhibitorConcen == 50) %>%
-  ggbarplot( x = "inhibitorConcen", y = "mean",
-             add = c("mean_se", "jitter"),
-             color = "black",
-             fill = "inhibitorConcen",
+biodist_mouse_oc$animalType <- factor(biodist_mouse_oc$animalType, levels=c("NG" ,"control", "sirna"))
+biodist_mouse_oc$ng_Control <- biodist_mouse_oc$animalType %>% fct_collapse(control = c("control","sirna"))
+
+biodist_mouse_oc_mean<-summarySE(biodist_mouse_oc, measurevar="fold_change_within_animal", groupvars=c("tissue","time_hrs"))
+
+###########################  visualization
+figure_3c<-biodist_mouse_oc %>% 
+  filter(tumorMetNorm == "primary") %>%
+    ggbarplot( x = "tumorMetNorm", y = "fold_change_within_animal",width = 0.3, 
+             add = c("mean_se", "dotplot"),
+             color = "time_hrs",
+             fill = "time_hrs",
              palette = "Blues",
-             width = 0.41,
              add.params = list(size = .4),
              position = position_dodge(0.4),
+             facet.by = "ng_Control"
+  )+
+  scale_y_continuous(trans='log2')+
+  theme(legend.position = "none")
+
+
+# 2
+figure_3g<-biodist_mouse_oc %>% 
+  filter(tumorMetNorm == "mets") %>%
+  ggbarplot( x = "tumorMetNorm", y = "fold_change_within_animal",width = 0.3, 
+             add = c("mean_se", "dotplot"),
+             color = "time_hrs",
+             fill = "time_hrs",
+             palette = "Blues",
+             add.params = list(size = .4),
+             position = position_dodge(0.4),
+             facet.by = "ng_Control"
   )+
   theme(legend.position = "none")
 
 
-heyCell_LatA<-heyCell_allData %>% 
-  filter(inhibitor == 'LatA') %>%
-  filter(objective == '20x') %>%
-  filter(intDen < 40000) %>%
-  # filter(inhibitorConcen == 0 | inhibitorConcen == 1|  inhibitorConcen == 2) %>%
-  ggbarplot( x = "inhibitorConcen", y = "mean",
-             add = c("mean_se", "jitter"),
-             color = "black",
-             fill = "inhibitorConcen",
+figure_3d<-biodist_mouse_oc %>% 
+  filter(tissue == "liver" |
+           tissue == "kidney" |
+           tissue == "spleen" |
+           tissue == "heart" |
+           tissue == "lungs" |
+           tissue == "gi_healthy") %>%
+  filter(ng_Control != "control") %>%
+  # filter(animalType != "sirna") %>%
+  filter(tumorMetNorm != "mets") %>%
+  # 
+  ggbarplot( x = "tissue", y = "fold_change_within_animal",width = 0.3, 
+             add = c("mean_se", "dotplot"),
+             color = "time_hrs", 
+             fill = "time_hrs",
              palette = "Blues",
-             width = 0.41,
              add.params = list(size = .4),
              position = position_dodge(0.4),
+             # facet.by = "ng_Control",
+             ylim = c(0, 100)
   )+
   theme(legend.position = "none")
 
 
-heyCell_cytoD<-heyCell_allData %>% 
-  filter(inhibitor == 'cytoD') %>%
-  filter(objective == '20x') %>%
-  filter(intDen < 40000) %>%
-  # filter(inhibitorConcen == 0 | inhibitorConcen == 2|  inhibitorConcen == 4) %>%
-  ggbarplot( x = "inhibitorConcen", y = "intDen",
-             add = c("mean_se", "jitter"),
-             color = "black",
-             fill = "inhibitorConcen",
-             palette = "Blues",
-             width = 0.41,
-             add.params = list(size = .4),
-             position = position_dodge(0.4),
-  )+
-  theme(legend.position = "none")
-
-
-heyCell_Cpz<-heyCell_allData %>% 
-  filter(inhibitor == 'Cpz') %>%
-  filter(objective == '20x') %>%
-  mutate_at(vars("intDen"), funs(./1000)) %>%
-    ggbarplot( x = "inhibitorConcen", y = "intDen",
-             add = c("mean_se", "jitter"),
-             color = "black",
-             fill = "inhibitorConcen",
-             palette = "Blues",
-             width = 0.41,
-             add.params = list(size = .4),
-             position = position_dodge(0.4),
-  )+
-  theme(legend.position = "none")
-
-heyCell_MBcd<-heyCell_allData %>% 
-  filter(inhibitor == 'MBcd') %>%
-  filter(objective == '20x') %>%
-  filter(intDen < 30000) %>%
-  # filter(inhibitorConcen == 0 | inhibitorConcen == 0.5| inhibitorConcen == 1) %>%
-  ggbarplot( x = "inhibitorConcen", y = "mean",
-             add = c("mean_se", "jitter"),
-             color = "black",
-             fill = "inhibitorConcen",
-             palette = "Blues",
-             width = 0.41,
-             add.params = list(size = .4),
-             position = position_dodge(0.4),
-  )+
-  theme(legend.position = "none")
 
 ########################### saving figures
-ggsave(heyCell_ATPdependent, file = "heyCell_ATPdependent_2a.pdf", width = 1.5, height = 3, units = "in", path = "figures/fig_2")
-ggsave(heyCell_Cpz, file = "heyCell_Cpz_2b.pdf", width = 1.5, height = 3, units = "in", path = "figures/fig_2")
+ggsave(figure_3c, file = "figure_3c.pdf", width = 3, height = 4, units = "in", path = "figures/fig_3")
+ggsave(figure_3d, file = "figure_3d.pdf", width = 8, height = 4, units = "in", path = "figures/fig_3")
+ggsave(figure_3g, file = "figure_3g.pdf", width = 3, height = 4, units = "in", path = "figures/fig_3")
 ggsave(heyCell_cytoD, file = "heyCell_cytoD_2c.pdf", width = 1.5, height = 3, units = "in", path = "figures/fig_2")
 ggsave(heyCell_MBcd, file = "heyCell_MBcd_supp_fig_5.pdf", width = 1.5, height = 3, units = "in", path = "figures/supp_figs/")
 ggsave(heyCell_LatA, file = "heyCell_LatA__supp_fig_5.pdf", width = 1.5, height = 3, units = "in", path = "figures/supp_figs/")
