@@ -37,7 +37,7 @@
 ########################### analyses/modeling
 ########################### saving data
 ########################### saving figures
-########################### Clean up
+########################### clean up
 ##### end TEMPLATE #####
 
 
@@ -57,9 +57,9 @@ rm(package.check)
 heyCell_allData <- read_excel("data/fig_2/heyCell_allData.xlsx", 
                               na = "NA")
 
-########################### Data Wrangling
+########################### data wrangling
 heyCell_allData$ngConcen_mgML <- factor(heyCell_allData$ngConcen_mgML, levels=c('3', '1.5', '0.75', '0.375'))
-########################### quick visualization
+###########################  visualization
 
 ## sodium-azide-dependent internalization
 heyCell_ATPdependent<-heyCell_allData %>% 
@@ -149,7 +149,7 @@ ggsave(heyCell_Cpz, file = "heyCell_Cpz_2b.pdf", width = 1.5, height = 3, units 
 ggsave(heyCell_cytoD, file = "heyCell_cytoD_2c.pdf", width = 1.5, height = 3, units = "in", path = "figures/fig_2")
 ggsave(heyCell_MBcd, file = "heyCell_MBcd_supp_fig_5.pdf", width = 1.5, height = 3, units = "in", path = "figures/supp_figs/")
 ggsave(heyCell_LatA, file = "heyCell_LatA__supp_fig_5.pdf", width = 1.5, height = 3, units = "in", path = "figures/supp_figs/")
-########################### Clean up
+########################### clean up
 rm(heyCell_ATPdependent, heyCell_Cpz, heyCell_cytoD, heyCell_LatA, heyCell_MBcd, heyCell_allData)
 
 
@@ -162,7 +162,7 @@ sirnaEndosomColoc_allData <- read_excel("data/fig_2/heyCellsiRNAendosomeCOLOC.xl
 ########################### data wrangling
 sirnaEndosomColoc_allData$cell <- factor(sirnaEndosomColoc_allData$cell)
 sirnaEndosomColoc_allData$metric <- factor(sirnaEndosomColoc_allData$metric)
-########################### quick visualization
+########################### visualization
 siRNA_endosome_Fig<- sirnaEndosomColoc_allData %>% 
   ggplot(aes(x = factor(metric), y = pearsonCorr, fill = factor(metric))) +
   
@@ -201,16 +201,13 @@ siRNA_endosome_Fig<- sirnaEndosomColoc_allData %>%
   ) +
   coord_flip()+
   theme(legend.position = "none")
-
-
 ########################### analyses/modeling
 sirnaEndosomColoc_allData %>%
   summarise(meanColoc = mean(pearsonCorr),
             sdColoc = sd(pearsonCorr))
-########################### saving data
 ########################### saving figures
 ggsave(siRNA_endosome_Fig, file = "siRNA_endosome_Fig_2g.pdf", width = 5, height = 3, units = "in", path = "figures/fig_2")
-########################### Clean up
+########################### clean up
 rm(siRNA_endosome_Fig, sirnaEndosomColoc_allData)
 
 
@@ -218,18 +215,14 @@ rm(siRNA_endosome_Fig, sirnaEndosomColoc_allData)
 
 ########################### Figure 2h siRNA release ###########################
 
-########################### load dependencies
-########################### Custom Functions
-########################### Load Data
+########################### load data
 heyCellsiRNAsangsCOLOC_allData <- read_excel("data/fig_2/heyCellsiRNAsangsCOLOC.xlsx", 
                                              na = "NA")
-
-########################### Data Wrangling
+########################### data wrangling
 heyCellsiRNAsangsCOLOC_allData$cell <- factor(heyCellsiRNAsangsCOLOC_allData$cell)
 heyCellsiRNAsangsCOLOC_allData$metric <- factor(heyCellsiRNAsangsCOLOC_allData$metric)
 heyCellsiRNAsangsCOLOC_allData$stage <- factor(heyCellsiRNAsangsCOLOC_allData$stage)
-
-########################### quick visualization
+########################### visualization
 siRNA_sang_Fig<- heyCellsiRNAsangsCOLOC_allData %>% 
   # filter(metric != "pearsonCorr") %>%
   filter(metric == "ColocCoeff1") %>%
@@ -246,7 +239,7 @@ siRNA_sang_Fig<- heyCellsiRNAsangsCOLOC_allData %>%
   )
 ########################### saving figures
 ggsave(siRNA_sang_Fig, file = "siRNA_sang_Fig_2h.pdf", width = 3, height = 4, units = "in", path = "figures/fig_2")
-########################### Clean up
+########################### clean up
 rm(siRNA_endosome_Fig, heyCellsiRNAsangsCOLOC_allData, siRNA_sang_Fig)
 
 
@@ -256,7 +249,7 @@ rm(siRNA_endosome_Fig, heyCellsiRNAsangsCOLOC_allData, siRNA_sang_Fig)
 ########################### load data
 rtPCR_data <- read_excel("data/fig_2/rtPCR_data.xlsx", 
                          na = "NA")
-########################### quick visualization
+########################### visualization
 inVitroSANGexpression<-rtPCR_data %>% 
   filter(experiment == 'culture') %>%
   # filter(treatment == 'zeb1') %>%
@@ -280,7 +273,7 @@ rtPCR_data %>%
 cohensD = (1-0.540)/(sqrt((0.116^2+0.124^2)/2))
 ########################### saving figures
 ggsave(inVitroSANGexpression, file = "inVitroSANGexpression.pdf", width = 4, height = 4, units = "in", path = "figures/fig_2")
-########################### Clean up
+########################### clean up
 rm(inVitroSANGexpression, rtPCR_data)
 
 

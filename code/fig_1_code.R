@@ -37,7 +37,7 @@
 ########################### analyses/modeling
 ########################### saving data
 ########################### saving figures
-########################### Clean up
+########################### clean up
 ##### end TEMPLATE #####
 
 
@@ -55,7 +55,7 @@ rm(package.check)
 ########################### Figure 1d  ###########################
 ########################### description
 # dls size distribution over batches
-########################### Load Data
+########################### load data
 dls_ng_size <- read_excel("data/fig_1/dls_ng_size_batches_shell_core.xlsx",  na = "NA") 
 
 ########################### data wrangling
@@ -83,7 +83,7 @@ dls_ng_size %>%
             )
 ########################### saving figures
 ggsave(dls_batch_size_fig, file = "dls_batch_size_fig_1d.pdf", width = 6, height = 4, units = "in", path = "figures/fig_1/")
-########################### Clean up
+########################### clean up
 rm(dls_ng_size, dls_batch_size_fig)
 
 
@@ -91,9 +91,9 @@ rm(dls_ng_size, dls_batch_size_fig)
 ########################### Figure 1e  ###########################
 ########################### description
 # dls size distribution over time and temps
-########################### Load Data
+########################### load data
 dls_ng_size_overTime <- read_excel("data/fig_1/dls_ng_size_overTime.xlsx",  na = "NA") 
-########################### Data Wrangling
+########################### data wrangling
 dls_ng_size_overTime$temp <- factor(dls_ng_size_overTime$temp)
 dls_ng_size_overTime$loadingStatus <- factor(dls_ng_size_overTime$loadingStatus)
 ########################### visualization
@@ -113,7 +113,7 @@ dls_ng_size_overTime %>%
   )
 ########################### saving figures
 ggsave(dls_ng_size_overTime_fig, file = "dls_ng_size_overTime_fig_1e.pdf", width = 6, height = 4, units = "in", path = "figures/fig_1/")
-########################### Clean up
+########################### clean up
 rm(dls_ng_size_overTime, dls_ng_size_overTime_fig)
 
 
@@ -150,7 +150,7 @@ viability_data %>%
   )
 ########################### saving figures
 ggsave(viability_fig, file = "viability_fig_1f.pdf", width = 4, height = 4, units = "in", path = "figures/fig_1/")
-########################### Clean up
+########################### clean up
 rm(viability_data, viability_fig)
 
 
@@ -186,10 +186,9 @@ heyCell_allData %>%
   filter(objective == '20x') %>%
   group_by(ngConcen_mgML) %>%
   summarise(n=n())
-########################### saving data
 ########################### saving figures
 ggsave(heyCell_dose_dependentInternalization, file = "heyCell_dose_dependentInternalization_1h.pdf", width = 3, height = 5, units = "in", path = "figures/fig_1/")
-########################### Clean up
+########################### clean up
 rm(heyCell_allData, heyCell_dose_dependentInternalization)
 
 

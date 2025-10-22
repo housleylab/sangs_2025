@@ -90,79 +90,64 @@ data_summary <- function(x) {
 
 scale_values <- function(x){(x-min(x))/(max(x)-min(x))}
 
-########################### Figure 3c - 3g   ###########################
-########################### mouse biodistribution
+########################### Figure 4c  ###########################
+########################### rat biodistribution
 ########################### load data
-biodist_mouse_oc <- read_excel("data/fig_3/raw_organ_biodistribution_mouse.xlsx", 
+biodist_rat_crc <- read_excel("data/fig_4/raw_organ_biodistribution_rat.xlsx", 
                                na = c("NA", "QNS"))
 ########################### data wrangling
-biodist_mouse_oc <- biodist_mouse_oc %>% filter(use == "yes")
-biodist_mouse_oc$scaledTotalRadiance <- scale_values(biodist_mouse_oc$total_radiance_efficency)
-biodist_mouse_oc$tissue <- as.factor(biodist_mouse_oc$tissue)
-biodist_mouse_oc$time_hrs <- factor(biodist_mouse_oc$time_hrs, levels=c('control', '4', '24', '48','72', '288'))
-biodist_mouse_oc$tissue <- factor(biodist_mouse_oc$tissue, levels=c('ovarian_tumor','spleen_mets', 'liver_mets', 'kidney_mets','gi_mets',
-                                                                    'liver', 'kidney','spleen', 'heart',   'lungs','fat', 'muscle',
-                                                                    'gi_healthy'))
+biodist_rat_crc <- biodist_rat_crc %>% filter(use == "yes")
+biodist_rat_crc$scaledTotalRadiance <- scale_values(biodist_rat_crc$total_radiance_efficency)
+biodist_rat_crc$tissue <- as.factor(biodist_rat_crc$tissue)
+biodist_rat_crc$time_hrs <- factor(biodist_rat_crc$time_hrs, levels=c('control', '4', '24', '48', '288'))
+biodist_rat_crc_mean<-summarySE(biodist_rat_crc, measurevar="fold_change_within_animal", groupvars=c("tissue","time_hrs"))
+###########################  visualization
+figure4c<- biodist_rat_crc %>% 
+  filter(tissue != "healthy_colon") %>%
+  filter(time_hrs != "control") %>%
+  ggbarplot(  x = "tissue", y = "fold_change_within_animal", 
+          color = "time_hrs", 
+          fill = "time_hrs",
+          add = c("mean_se", "jitter"), palette = "Blues",
+          # add.params = list(fill = "black"),
+          position = position_dodge(.8)) +
+  scale_color_manual(values = c(V = "#000000", Z = "#000000"))
 
-biodist_mouse_oc$animalType <- factor(biodist_mouse_oc$animalType, levels=c("NG" ,"control", "sirna"))
-biodist_mouse_oc$ng_Control <- biodist_mouse_oc$animalType %>% fct_collapse(control = c("control","sirna"))
 
-biodist_mouse_oc_mean<-summarySE(biodist_mouse_oc, measurevar="fold_change_within_animal", groupvars=c("tissue","time_hrs"))
+########################### saving figures
+ggsave(figure4c, file = "figure4c.pdf", width = 6, height = 6, units = "in", path = "figures/fig_4/")
+ggsave(figure4f, file = "figure4f.pdf", width = 6, height = 6, units = "in", path = "figures/fig_4/")
+########################### clean up
+rm(figure4c, figure4f, biodist_rat_crc_mean, biodist_rat_crc)
+
+
+
+########################### Figure 4f   ###########################
+########################### rat biodistribution
+########################### load data
+biodist_rat_lung <- read_excel("data/fig_4/lung_biodist_database.xlsx", 
+                              na = c("NA", "QNS"))
+########################### data wrangling
+biodist_rat_lung$condition <- as.factor(biodist_rat_lung$condition)
+biodist_rat_lung$channel <- as.factor(biodist_rat_lung$channel)
+biodist_rat_lung$time_factor <- factor(biodist_rat_lung$time_factor, levels=c('control','4', '24', '48'))
+biodist_rat_lung$scaledTotalRadiance <- scale_values(biodist_rat_lung$total_radiance_efficency)
 
 ###########################  visualization
-figure_3c<-biodist_mouse_oc %>% 
-  filter(tumorMetNorm == "primary") %>%
-    ggbarplot( x = "tumorMetNorm", y = "fold_change_within_animal",width = 0.3, 
-             add = c("mean_se", "dotplot"),
-             color = "time_hrs",
-             fill = "time_hrs",
-             palette = "Blues",
-             add.params = list(size = .4),
-             position = position_dodge(0.4),
-             facet.by = "ng_Control"
-  )+
-  scale_y_continuous(trans='log2')+
-  theme(legend.position = "none")
+figure4f<- 
+  biodist_rat_lung %>% 
+  filter(channel != "mda_luc2") %>%
+  filter(channel != "mda_gfp") %>%
+  ggbarplot( x = "time_factor", y = "fold_change_flux", 
+             color = "time_factor", 
+             fill = "time_factor",
+             add = c("mean_se", "jitter"), palette = "Blues",
+             # add.params = list(fill = "black"),
+             position = position_dodge(.8)) +
+  scale_color_manual(values = c(V = "#000000", Z = "#000000"))
 
-figure_3g<-biodist_mouse_oc %>% 
-  filter(tumorMetNorm == "mets") %>%
-  ggbarplot( x = "tumorMetNorm", y = "fold_change_within_animal",width = 0.3, 
-             add = c("mean_se", "dotplot"),
-             color = "time_hrs",
-             fill = "time_hrs",
-             palette = "Blues",
-             add.params = list(size = .4),
-             position = position_dodge(0.4),
-             facet.by = "ng_Control"
-  )+
-  theme(legend.position = "none")
-
-figure_3d<-biodist_mouse_oc %>% 
-  filter(tissue == "liver" |
-           tissue == "kidney" |
-           tissue == "spleen" |
-           tissue == "heart" |
-           tissue == "lungs" |
-           tissue == "gi_healthy") %>%
-  filter(ng_Control != "control") %>%
-  filter(tumorMetNorm != "mets") %>%
-   
-  ggbarplot( x = "tissue", y = "fold_change_within_animal",width = 0.3, 
-             add = c("mean_se", "dotplot"),
-             color = "time_hrs", 
-             fill = "time_hrs",
-             palette = "Blues",
-             add.params = list(size = .4),
-             position = position_dodge(0.4),
-             # facet.by = "ng_Control",
-             ylim = c(0, 100)
-  )+
-  theme(legend.position = "none")
 ########################### saving figures
-ggsave(figure_3c, file = "figure_3c.pdf", width = 3, height = 4, units = "in", path = "figures/fig_3")
-ggsave(figure_3d, file = "figure_3d.pdf", width = 8, height = 4, units = "in", path = "figures/fig_3")
-ggsave(figure_3g, file = "figure_3g.pdf", width = 3, height = 4, units = "in", path = "figures/fig_3")
+ggsave(figure4c, file = "figure4c.pdf", width = 6, height = 6, units = "in", path = "figures/fig_4/")
+ggsave(figure4f, file = "figure4f.pdf", width = 6, height = 6, units = "in", path = "figures/fig_4/")
 ########################### clean up
-rm(figure_3c, figure_3d, figure_3g, biodist_mouse_oc, biodist_mouse_oc_mean)
-
-
+rm(figure4c, figure4f, biodist_rat_crc_mean, biodist_rat_crc)
