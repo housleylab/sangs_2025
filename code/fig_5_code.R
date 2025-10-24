@@ -45,7 +45,7 @@
 
 invisible(rm(list = ls()))
 invisible(gc())
-setwd("~/GaTech Dropbox/CoS/BioSci/BioSci-Housley_Lab/04-papers/nature_comm/sangs_2025/")
+setwd("sangs_2025/")
 
 ########################### load general dependencies ########################### 
 source("code/load_gen_dependencies.R")
