@@ -19,7 +19,7 @@
 ## version Hx
 # v0.1- original April 5, 2023.
 # v1.1- original May 5, 2024. - publish to github
-# v1.2- original Oct 21, 2025. - publish to github
+# v1.2- original Oct 21, 2025. - publish to public github
 
 # paths must be changed to accommodate end user file structure (e.g. line 59)
 # run on MacOS 14.6.1 
@@ -45,7 +45,7 @@
 
 invisible(rm(list = ls()))
 invisible(gc())
-setwd("sangs_2025/") 
+setwd("sangs_2025/")
 
 ########################### load general dependencies ########################### 
 source("code/load_gen_dependencies.R")
