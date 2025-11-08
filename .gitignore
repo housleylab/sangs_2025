@@ -48,7 +48,7 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
-# data
-data/ 
-
+# og code
+code/self_agglomerating_nanohydrogel_analysis_figures_code.R 
+code/final_code copy 2.R
 
