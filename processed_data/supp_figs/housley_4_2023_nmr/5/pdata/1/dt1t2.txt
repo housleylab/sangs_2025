@@ -1,0 +1,9 @@
+
+Region 1 from 4.817 to 4.611 ppm
+Diff Con.      =   1.762e-09 m2/s
+Region 2 from 3.992 to 3.688 ppm
+Diff Con.      =   5.465e-11 m2/s
+Region 3 from 3.676 to 3.373 ppm
+Diff Con.      =   4.445e-10 m2/s
+Region 4 from 1.408 to 0.632 ppm
+Diff Con.      =   5.869e-11 m2/s

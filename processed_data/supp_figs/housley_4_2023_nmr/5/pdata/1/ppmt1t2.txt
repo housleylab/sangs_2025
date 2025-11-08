@@ -1,0 +1,4 @@
+Region 1 from 4.817 to 4.611 ppm
+Region 2 from 3.992 to 3.688 ppm
+Region 3 from 3.676 to 3.373 ppm
+Region 4 from 1.408 to 0.632 ppm

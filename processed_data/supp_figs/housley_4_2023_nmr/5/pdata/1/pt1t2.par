@@ -1,0 +1,28 @@
+Start
+12 1 1  3.348e+09
+I[0]           =   8.901e-01
+Diff Con.      =   1.762e-09
+Gamma          =   4.258e+03 Hz/G
+Little Delta   =   2.000e-03
+Big Delta      =   5.990e-02
+Start
+12 2 1  3.348e+09
+I[0]           =   1.343e-01
+Diff Con.      =   5.465e-11
+Gamma          =   4.258e+03 Hz/G
+Little Delta   =   2.000e-03
+Big Delta      =   5.990e-02
+Start
+12 3 1  3.348e+09
+I[0]           =   1.705e-02
+Diff Con.      =   4.445e-10
+Gamma          =   4.258e+03 Hz/G
+Little Delta   =   2.000e-03
+Big Delta      =   5.990e-02
+Start
+12 4 1  3.348e+09
+I[0]           =   9.976e-01
+Diff Con.      =   5.869e-11
+Gamma          =   4.258e+03 Hz/G
+Little Delta   =   2.000e-03
+Big Delta      =   5.990e-02

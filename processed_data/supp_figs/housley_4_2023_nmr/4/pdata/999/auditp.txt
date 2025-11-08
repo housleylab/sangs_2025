@@ -1,0 +1,27 @@
+##TITLE= Audit trail, TopSpin 3.5 pl 7
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= hanno
+$$ /opt/topspin3.5pl7/data/hanno/nmr/housley_4_2023/4/pdata/999/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2023-04-25 10:51:57.633 -0400>,<hanno>,<c3po>,<go4>,<TopSpin 3.5.7>,
+      <created by zg
+	started at 2023-04-25 10:31:01.727 -0400,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       0F 04 C6 31 DC 95 67 21 A6 9C 62 3D 99 87 FD 7A
+       data hash MD5: 16K * 16
+       F3 BB D3 10 FD C4 E8 FA 6E 7A B5 70 6E 6F BF 11>)
+(   2,<2023-04-25 11:15:25.661 -0400>,<hanno>,<c3po>,<proc1d>,<TopSpin 3.5.7>,
+      <Start of raw data processing
+       efp 1 LB = 1 FT_mod = 6 PKNL = 1 PHC0 = -130.6 PHC1 = 0 SI = 8K 
+       data hash MD5: 8K
+       3C CC 87 78 E1 95 95 5B 26 88 82 E8 FB D7 0D AA>)
+(   3,<2023-04-25 11:15:29.835 -0400>,<hanno>,<c3po>,<proc1d>,<TopSpin 3.5.7>,
+      <apk 
+       data hash MD5: 8K
+       2E B2 E0 2D A7 C8 DB 91 95 48 09 C5 7C 13 56 01>)
+##END=
+
+$$ hash MD5
+$$ 1E 91 F1 2F 45 2C 8E CE 18 31 22 88 72 7C 8E C9

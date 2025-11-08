@@ -1,0 +1,5 @@
+Tue Apr 25 12:07:25 {EDT} 2023 Gradres set to default due to error 0.008
+Tue Apr 25 12:07:25 {EDT} 2023 -----------------------------------------------------------------
+Tue Apr 25 12:07:25 {EDT} 2023 diff version diff-4.13 started from TopSpin version 3.5
+Tue Apr 25 12:07:25 {EDT} 2023 initAcqu: nbl = 1
+Tue Apr 25 12:07:25 {EDT} 2023 checkDims: 2D = 1 2Dp = 1

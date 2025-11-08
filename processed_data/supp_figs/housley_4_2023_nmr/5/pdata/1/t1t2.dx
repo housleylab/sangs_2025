@@ -1,0 +1,99 @@
+##TITLE= List of Points
+##JCAMPDX= 5.0
+##DATA TYPE= LINK
+##BLOCKS= 4	$$ is the number of fits or point lists
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= hanno
+$$ 2023-04-25 12:59:10.083 -0400  hanno@c3po
+$$ /opt/topspin3.5pl7/data/hanno/nmr/housley_4_2023/5/pdata/1/t1t2.dx
+##XUNITS= G/cm
+##YUNITS= a.u.
+##MINX=   1.016000e+00
+##MAXX=   3.679700e+01
+##MINY=   0.000000e+00
+##MAXY=   1.000000e+00
+##TITLE= Peak No. 1 at 4.706 ppm, vargrad, I[0] =  8.901e-01, D =  1.762e-09 m2/s
+##JCAMP-DX= 5.0
+##DATA TYPE= Relaxation Data
+$$
+##$FITFKT= vargrad(  8.901369e-01,   1.762340e-09,   4.257700e+03,   2.000000e-03,   5.990000e-02)
+$$
+##NPOINTS= 12
+##XYPOINTS= (XY..XY)
+ 1.016e+00,  8.890359e-01
+ 4.269e+00,  8.400641e-01
+ 7.522e+00,  7.526543e-01
+ 1.077e+01,  6.299501e-01
+ 1.403e+01,  4.940393e-01
+ 1.728e+01,  3.650654e-01
+ 2.053e+01,  2.518839e-01
+ 2.379e+01,  1.633131e-01
+ 2.704e+01,  1.004236e-01
+ 3.029e+01,  5.781077e-02
+ 3.354e+01,  3.140023e-02
+ 3.680e+01,  1.638730e-02
+##END= $$ End of List for Peak No. 1
+##TITLE= Peak No. 2 at 3.821 ppm, vargrad, I[0] =  1.343e-01, D =  5.465e-11 m2/s
+##JCAMP-DX= 5.0
+##DATA TYPE= Relaxation Data
+$$
+##$FITFKT= vargrad(  1.343480e-01,   5.464511e-11,   4.257700e+03,   2.000000e-03,   5.990000e-02)
+$$
+##NPOINTS= 12
+##XYPOINTS= (XY..XY)
+ 1.016e+00,  1.359628e-01
+ 4.269e+00,  1.335866e-01
+ 7.522e+00,  1.350332e-01
+ 1.077e+01,  1.341417e-01
+ 1.403e+01,  1.304450e-01
+ 1.728e+01,  1.301816e-01
+ 2.053e+01,  1.273207e-01
+ 2.379e+01,  1.263989e-01
+ 2.704e+01,  1.255698e-01
+ 3.029e+01,  1.223984e-01
+ 3.354e+01,  1.224449e-01
+ 3.680e+01,  1.193230e-01
+##END= $$ End of List for Peak No. 2
+##TITLE= Peak No. 3 at 3.518 ppm, vargrad, I[0] =  1.705e-02, D =  4.445e-10 m2/s
+##JCAMP-DX= 5.0
+##DATA TYPE= Relaxation Data
+$$
+##$FITFKT= vargrad(  1.704951e-02,   4.444538e-10,   4.257700e+03,   2.000000e-03,   5.990000e-02)
+$$
+##NPOINTS= 12
+##XYPOINTS= (XY..XY)
+ 1.016e+00,  1.856518e-02
+ 4.269e+00,  1.649662e-02
+ 7.522e+00,  1.563397e-02
+ 1.077e+01,  1.513857e-02
+ 1.403e+01,  1.457032e-02
+ 1.728e+01,  1.411125e-02
+ 2.053e+01,  1.093682e-02
+ 2.379e+01,  1.201363e-02
+ 2.704e+01,  1.003705e-02
+ 3.029e+01,  8.517408e-03
+ 3.354e+01,  6.896183e-03
+ 3.680e+01,  6.635975e-03
+##END= $$ End of List for Peak No. 3
+##TITLE= Peak No. 4 at 1.078 ppm, vargrad, I[0] =  9.976e-01, D =  5.869e-11 m2/s
+##JCAMP-DX= 5.0
+##DATA TYPE= Relaxation Data
+$$
+##$FITFKT= vargrad(  9.975980e-01,   5.868926e-11,   4.257700e+03,   2.000000e-03,   5.990000e-02)
+$$
+##NPOINTS= 12
+##XYPOINTS= (XY..XY)
+ 1.016e+00,  9.994199e-01
+ 4.269e+00,  1.000000e+00
+ 7.522e+00,  9.918961e-01
+ 1.077e+01,  9.874945e-01
+ 1.403e+01,  9.768266e-01
+ 1.728e+01,  9.683221e-01
+ 2.053e+01,  9.532979e-01
+ 2.379e+01,  9.380284e-01
+ 2.704e+01,  9.255061e-01
+ 3.029e+01,  9.099700e-01
+ 3.354e+01,  8.920290e-01
+ 3.680e+01,  8.767579e-01
+##END= $$ End of List for Peak No. 4
+##END= $$ End of List of Points

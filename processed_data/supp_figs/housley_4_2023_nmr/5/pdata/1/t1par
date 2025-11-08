@@ -1,0 +1,46 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 7
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 274	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= hanno
+$$ 2023-04-25 12:59:10.093 -0400  hanno@c3po
+$$ /opt/topspin3.5pl7/data/hanno/nmr/housley_4_2023/5/pdata/1/t1par
+$$ process /opt/topspin3.5pl7/prog/mod/dataserver
+##$BIGDEL= 59.9
+##$CALCDN= yes
+##$COMPNO= 1
+##$CONV= 1e-05
+##$CURSOR= 4
+##$DRIFT= 5
+##$EDGUESS= 0
+##$EDPARM= 0
+##$FCTTYPE= 10
+##$FIDNUMB= 1
+##$FITT1T2= 0
+##$FITTYPE= 1
+##$GAMM= 4257.7
+##$GRADIEN= 1
+##$GUESSES= (0..23)
+1 1e-09 1 1 1 1 1 1 1 1 1 1 0.1 1e-10 1 1 1 1 1 1 1 1 1 1
+##$INC= 1
+##$INTRNG= 1
+##$LISTINC= 0.001
+##$LISTTYP= <difflist>
+##$LITDEL= 2
+##$MAXPNTS= 16
+##$NUMPNTS= 12
+##$NUMTERM= 2
+##$PARM= (0..11)
+0.99759795515536 5.86892606552508e-11 0 0 0 0 0 0 0 0 0 0
+##$PDTYP= <pd>
+##$REGIONS= 4
+##$SHOWINT= yes
+##$SHOWPP= yes
+##$SHOWTXT= 1
+##$START= 1
+##$X_END= 36.797
+##$X_START= 1.016
+##$Y_END= 3.348436e+09
+##$Y_START= 0
+##END=

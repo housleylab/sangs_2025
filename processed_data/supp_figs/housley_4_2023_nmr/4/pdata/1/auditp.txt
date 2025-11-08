@@ -1,0 +1,39 @@
+##TITLE= Audit trail, TopSpin 3.5 pl 7
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= hanno
+$$ /opt/topspin3.5pl7/data/hanno/nmr/housley_4_2023/4/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2023-04-25 10:51:57.633 -0400>,<hanno>,<c3po>,<go4>,<TopSpin 3.5.7>,
+      <created by zg
+	started at 2023-04-25 10:31:01.727 -0400,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       0F 04 C6 31 DC 95 67 21 A6 9C 62 3D 99 87 FD 7A
+       data hash MD5: 16K * 16
+       F3 BB D3 10 FD C4 E8 FA 6E 7A B5 70 6E 6F BF 11>)
+(   2,<2023-04-25 12:51:33.400 -0400>,<hanno>,<c3po>,<proc2d>,<TopSpin 3.5.7>,
+      <Start of raw data processing
+       xf2 F2: SI = 8K WDW = 1 LB = 1 FT_mod = 6 PKNL = 1 PHC0 = -130.6 PHC1 = 0 F1: SI = 1K
+       data hash MD5: 8K * 1K
+       AB 25 85 1D 9E D4 37 F3 04 71 0A E6 0B ED BE CE>)
+(   3,<2023-04-25 13:00:09.478 -0400>,<hanno>,<c3po>,<proc2d>,<TopSpin 3.5.7>,
+      <dosy2d Method = 0 PC = 0.1 F1mode = Peaks Scale = Logarithmic Nexp = 1 I1 = 1000000000 I1min = -2147483647 I1max = 2147483647 D1 = 1e-12 D1min = 0 D1max = 1e-08 Bvary = 0 F1: SI = 1K
+       data hash MD5: 8K * 1K
+       3F 2D 5B FB 59 E5 F6 21 37 15 C0 F8 15 DB 96 BD>)
+(   4,<2023-04-25 13:00:21.719 -0400>,<hanno>,<c3po>,<audit>,<TopSpin 3.5.7>,
+      <user comment:
+       TITLE=nanohydrogel
+       dosy, sample is spinningTITLE_END
+       data hash MD5: 8K * 1K
+       3F 2D 5B FB 59 E5 F6 21 37 15 C0 F8 15 DB 96 BD>)
+(   5,<2023-04-25 13:00:22.181 -0400>,<hanno>,<c3po>,<audit>,<TopSpin 3.5.7>,
+      <user comment:
+       TITLE=nanohydrogel
+       dosy, sample is spinningTITLE_END
+       data hash MD5: 8K * 1K
+       3F 2D 5B FB 59 E5 F6 21 37 15 C0 F8 15 DB 96 BD>)
+##END=
+
+$$ hash MD5
+$$ E0 84 63 40 70 41 58 D8 85 82 40 BA E1 46 00 94

@@ -1,0 +1,30 @@
+Dataset :
+/opt/topspin3.5pl7/data/hanno/nmr/housley_4_2023/4/pdata/1
+
+Spinning speed : 1.000000
+
+Peak 1 (xy 4.709 ppm)
+
+    number integral(S0) integral(S*) intensity(S0) intensity(S*)
+
+         1     1.39e+09     1.48e+09      3.17e+08      3.36e+08
+         2     1.03e+09     1.24e+09      2.34e+08      2.83e+08
+         3     5.79e+08     7.97e+08       1.3e+08      1.81e+08
+         4            0            0             0             0
+         5            0            0             0             0
+         6            0            0             0             0
+         7            0            0             0             0
+         8            0            0             0             0
+
+    time(mS) DS/S0(integral) DS/S0(intensity)
+
+           2        -0.06206         -0.05965
+           4         -0.2064          -0.2074
+           6         -0.3763          -0.3842
+           8         -0.3763          -0.3842
+          10         -0.3763          -0.3842
+          12         -0.3763          -0.3842
+          14         -0.3763          -0.3842
+          16         -0.3763          -0.3842
+
+

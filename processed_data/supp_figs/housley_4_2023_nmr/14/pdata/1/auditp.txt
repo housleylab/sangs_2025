@@ -1,0 +1,31 @@
+##TITLE= Audit trail, TopSpin 3.5 pl 7
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= hanno
+$$ /opt/topspin3.5pl7/data/hanno/nmr/housley_4_2023/14/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2023-04-25 12:28:50.034 -0400>,<hanno>,<c3po>,<go4>,<TopSpin 3.5.7>,
+      <created by zg
+	started at 2023-04-25 12:07:56.273 -0400,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       0F 04 C6 31 DC 95 67 21 A6 9C 62 3D 99 87 FD 7A
+       data hash MD5: 16K * 16
+       00 A3 B5 0A 53 86 85 3D 62 B5 DA F1 E1 FD D8 8E>)
+(   2,<2023-04-25 12:52:08.128 -0400>,<hanno>,<c3po>,<proc2d>,<TopSpin 3.5.7>,
+      <Start of raw data processing
+       xf2 F2: SI = 8K WDW = 1 LB = 1 FT_mod = 6 PKNL = 1 PHC0 = -135.8143 PHC1 = 16.8 F1: SI = 1K
+       data hash MD5: 8K * 1K
+       85 05 95 EA 3E 94 A1 0E 50 88 10 96 37 39 F0 66>)
+(   3,<2023-04-25 12:52:10.791 -0400>,<hanno>,<c3po>,<proc2d>,<TopSpin 3.5.7>,
+      <abs2 F2: ABSG = 0 ABSF1 = 10.9923 ABSF2 = -0.992296
+       data hash MD5: 8K * 1K
+       3E A0 A0 CB 31 2E 60 E6 63 FE B5 64 78 A8 6F AD>)
+(   4,<2023-04-25 13:01:12.729 -0400>,<hanno>,<c3po>,<proc2d>,<TopSpin 3.5.7>,
+      <dosy2d Method = 0 PC = 4 F1mode = Peaks Scale = Logarithmic Nexp = 1 I1 = 1000000000 I1min = -2147483647 I1max = 2147483647 D1 = 1e-09 D1min = 0 D1max = 1e-08 Bvary = 0 F1: SI = 1K
+       data hash MD5: 8K * 1K
+       79 88 62 AA 3C E4 CA 33 34 6D B0 C0 C2 CF A8 FD>)
+##END=
+
+$$ hash MD5
+$$ 35 26 8E F2 8C D0 11 98 C5 7A 18 22 C4 FC B6 A4

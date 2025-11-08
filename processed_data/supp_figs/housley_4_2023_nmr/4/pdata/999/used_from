@@ -1,0 +1,16 @@
+##TITLE= Parameter file, TopSpin 3.5 pl 7
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= hanno
+$$ 2023-04-25 11:15:20.971 -0400  hanno@c3po
+$$ /opt/topspin3.5pl7/data/hanno/nmr/housley_4_2023/4/pdata/999/used_from
+$$ process /opt/topspin3.5pl7/prog/mod/proc1d
+##$CUREXP= <ser>
+##$DATPATH= </opt/topspin3.5pl7/data/hanno/nmr>
+##$EXPNO= 4
+##$NAME= <housley_4_2023>
+##$PROCNO= 1
+##$PROCNO2= 1
+##END=

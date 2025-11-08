@@ -51,7 +51,7 @@ setwd("sangs_2025/")
 source("code/load_gen_dependencies.R")
 rm(package.check)
 
-########################### Figure 2a-c & Supp Fig 7   ###########################
+########################### Figure 2a-c & Supp Fig 5   ###########################
 ########################### description cell internalization and mechanism of entry
 ########################### load data
 heyCell_allData <- read_excel("processed_data/fig_2/heyCell_allData.xlsx", 
@@ -244,7 +244,7 @@ rm(siRNA_endosome_Fig, heyCellsiRNAsangsCOLOC_allData, siRNA_sang_Fig)
 
 
 
-########################### Figure 2i RNA knockdown in vitro ###########################
+########################### Figure 2i RNA knockdown in vitro and Supp Fig 9 ###########################
 
 ########################### load data
 rtPCR_data <- read_excel("processed_data/fig_2/rtPCR_data.xlsx", 
