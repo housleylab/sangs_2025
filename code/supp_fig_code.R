@@ -103,3 +103,86 @@ ggsave(heyCell_time_dependentInternalization, file = "heyCell_time_dependentInte
 invisible(rm(list = ls()))
 invisible(gc())
 
+
+
+
+
+########################### Figure 4 single dose tox porcine ###########################
+
+########################### load dependencies
+########################### Custom Functions
+########################### Load Data
+
+ng_tox_pig <- read_excel("processed_data/supp_figs/ng_tox_porcine.xlsx", 
+                         na = c("NA", "QNS"))
+########################### Data Wrangling
+ng_tox_pig$parameter <- as.factor(ng_tox_pig$parameter)
+########################### quick visualization
+#### bun ###
+
+color_list <- c("#1B9E77", "#D95F02", "#7570B3", "#E7298A")
+# 
+# rect2 <- data.frame(xmin = c(0,0,0,0),
+#                     xmax = c(360,360,360,360),
+#                     ymin = c(15,22,160,0.8),
+#                     ymax = c(55,47,450,2.3),
+#                     parameter = c("ast", "alt", "ldh", "creatinine"))
+# 
+# figure4_pig_serum_tox<-ggplot() + 
+#   geom_rect(data = rect2 , aes(xmin = xmin,
+#                                xmax = xmax,
+#                                ymin = ymin,
+#                                ymax = ymax,
+#                                fill = parameter),
+#             alpha = 0.2) +
+#   geom_line(data = ng_tox_pig, aes(x = collection_time_hr, y = value, colour=parameter), size = 1)+
+#   facet_wrap(~parameter, scales="free",nrow=4)+
+#   labs(x = "time (mins)",
+#        y = "Serum Value",
+#        title = "Acute Toxicity in Porcine"
+#   ) +
+#   scale_fill_manual(values=color_list) + 
+#   scale_color_manual(values=color_list)+
+#   theme(text=element_text(family="Arial"))+
+#   theme_classic()+
+#   theme(legend.position = "none")
+
+
+
+g0 <- ggplot(ng_tox_pig, aes(collection_time_hr, value, colour=parameter)) + 
+  geom_line(size =1) + 
+  facet_grid(rows = vars(parameter), scales = "free")
+
+facet_bounds <- read.table(header=TRUE,
+                           text=                           
+                             "parameter ymin ymax breaks
+alt     0     100    20
+ast     0     100    20
+creatinine     0    5    1
+ldh     0    500    100",
+                           stringsAsFactors=FALSE)
+
+ff <- with(facet_bounds,
+           data.frame(value=c(ymin,ymax),
+                      parameter=c(parameter,parameter)))
+
+figure4_pig_serum_tox<- g0 + geom_point(data=ff,x=NA)+
+  labs(x = "time (mins)",
+       y = "Serum Value",
+       title = "Acute Toxicity in Porcine"
+  ) +
+  scale_fill_manual(values=color_list) + 
+  scale_color_manual(values=color_list)+
+  theme(text=element_text(family="Arial"))+
+  theme_classic()+
+  theme(legend.position = "none")
+
+########################### saving figures
+ggsave(figure4_pig_serum_tox, file = "figure4_pig_serum_tox.pdf", width = 5, height = 4, units = "in", path = "figures/supp_figs/")
+
+########################### clean up
+invisible(rm(list = ls()))
+invisible(gc())
+
+
+
