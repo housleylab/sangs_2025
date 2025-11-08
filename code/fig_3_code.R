@@ -93,7 +93,7 @@ scale_values <- function(x){(x-min(x))/(max(x)-min(x))}
 ########################### Figure 3c - 3g   ###########################
 ########################### mouse biodistribution
 ########################### load data
-biodist_mouse_oc <- read_excel("data/fig_3/raw_organ_biodistribution_mouse.xlsx", 
+biodist_mouse_oc <- read_excel("processed_data/fig_3/raw_organ_biodistribution_mouse.xlsx", 
                                na = c("NA", "QNS"))
 ########################### data wrangling
 biodist_mouse_oc <- biodist_mouse_oc %>% filter(use == "yes")
