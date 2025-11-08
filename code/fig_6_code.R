@@ -217,5 +217,5 @@ tem_fig<-temSummary %>%
 ########################### saving figures
 ggsave(tem_fig, file = "tem_fig.pdf", width = 6, height = 4, units = "in", path = "figures/fig_6/")
 ########################### clean up
-rm(siRNA_endosome_Fig, sirnaEndosomColoc_allData)
-
+invisible(rm(list = ls()))
+invisible(gc())

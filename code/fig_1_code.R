@@ -56,7 +56,7 @@ rm(package.check)
 ########################### description
 # dls size distribution over batches
 ########################### load data
-dls_ng_size <- read_excel("data/fig_1/dls_ng_size_batches_shell_core.xlsx",  na = "NA") 
+dls_ng_size <- read_excel("processed_data/fig_1/dls_ng_size_batches_shell_core.xlsx",  na = "NA") 
 
 ########################### data wrangling
 dls_ng_size$batch <- factor(dls_ng_size$batch)
@@ -92,7 +92,7 @@ rm(dls_ng_size, dls_batch_size_fig)
 ########################### description
 # dls size distribution over time and temps
 ########################### load data
-dls_ng_size_overTime <- read_excel("data/fig_1/dls_ng_size_overTime.xlsx",  na = "NA") 
+dls_ng_size_overTime <- read_excel("processed_data/fig_1/dls_ng_size_overTime.xlsx",  na = "NA") 
 ########################### data wrangling
 dls_ng_size_overTime$temp <- factor(dls_ng_size_overTime$temp)
 dls_ng_size_overTime$loadingStatus <- factor(dls_ng_size_overTime$loadingStatus)
@@ -121,7 +121,7 @@ rm(dls_ng_size_overTime, dls_ng_size_overTime_fig)
 ########################### description
 # viability in vitro 
 ########################### load data
-viability_data <- read_excel("data/fig_1/viability.xlsx", 
+viability_data <- read_excel("processed_data/fig_1/viability.xlsx", 
                              na = "NA")
 ########################### data wrangling
 viability_data$treatment <- as.factor(viability_data$treatment)
@@ -159,7 +159,7 @@ rm(viability_data, viability_fig)
 ########################### description
 # cell internalization
 ########################### load data
-heyCell_allData <- read_excel("data/fig_1/heyCell_allData.xlsx", 
+heyCell_allData <- read_excel("processed_data/fig_1/heyCell_allData.xlsx", 
                               na = "NA")
 ########################### data wrangling
 heyCell_allData$ngConcen_mgML <- factor(heyCell_allData$ngConcen_mgML, levels=c('3', '1.5', '0.75', '0.375'))
