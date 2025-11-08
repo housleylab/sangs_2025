@@ -45,7 +45,7 @@
 
 invisible(rm(list = ls()))
 invisible(gc())
-setwd("sangs_2025/")
+# setwd("sangs_2025/")
 
 ########################### load general dependencies ########################### 
 source("code/load_gen_dependencies.R")
@@ -178,11 +178,290 @@ figure4_pig_serum_tox<- g0 + geom_point(data=ff,x=NA)+
   theme(legend.position = "none")
 
 ########################### saving figures
-ggsave(figure4_pig_serum_tox, file = "figure4_pig_serum_tox.pdf", width = 5, height = 4, units = "in", path = "figures/supp_figs/")
+ggsave(figure4_pig_serum_tox, file = "supp_fig_20_pig_serum_tox.pdf", width = 5, height = 4, units = "in", path = "figures/supp_figs/")
 
 ########################### clean up
 invisible(rm(list = ls()))
 invisible(gc())
+
+
+
+
+########################### Figure 4 single dose tolerability cd1 ###########################
+########################### Load Data
+ng_tox_cd1 <- read_excel("processed_data/supp_figs/ng_tox_cd_1.xlsx", 
+                         na = c("NA", "QNS"))
+########################### Data Wrangling
+ng_tox_cd1$collection_time_hr <- as.factor(ng_tox_cd1$collection_time_hr)
+ng_tox_cd1$sample_number <- as.factor(ng_tox_cd1$sample_number)
+ng_tox_cd1$group <- as.factor(ng_tox_cd1$group)
+ng_tox_cd1$animal_num_glp <- as.factor(ng_tox_cd1$animal_num_glp)
+#### 
+ng_tox_cd1_df<- ng_tox_cd1
+ng_tox_cd1_sum <- ng_tox_cd1_df %>%
+  # select(day, weight,treatment) %>% 
+  filter(value != "NA") %>% 
+  group_by(group,collection_time_hr, parameter) %>%
+  dplyr::summarise(
+    sd = sd(value),
+    value = mean(value),
+    n=n()) %>%
+  mutate(sem = sd / sqrt(n - 1),
+         CI_lower = value + qt((1-0.95)/2, n - 1) * sem,
+         CI_upper = value - qt((1-0.95)/2, n - 1) * sem)
+########################### quick visualization
+color_list <- c("#3a34eb","#eb3434")
+
+figure4_mouse_serum_tox<-ggplot(ng_tox_cd1_df, aes(group, value, color = group)) +
+  facet_wrap(~parameter,nrow=2, scales="free")+
+  geom_col(data = ng_tox_cd1_sum, position = position_dodge(0.2), 
+           width = 0.3, alpha=0.4, aes(fill = group)) +
+  geom_jitter(
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.8)
+  ) +
+  
+  geom_errorbar(
+    aes(ymin = value-sd, ymax = value+sd), data = ng_tox_cd1_sum, 
+    width = 0.2, position = position_dodge(0.8)
+  )+
+  scale_fill_manual(values=color_list) + 
+  scale_color_manual(values=color_list)+
+  theme_classic()+
+  stat_n_text(y.pos = -0.01, size = 3 )+
+  stat_compare_means(label = "p.format", size = 2)+
+  theme(text=element_text(family="Arial"))
+########################### saving figures
+ggsave(figure4_mouse_serum_tox, file = "supp_fig_19_mouse_serum_tox.pdf", width = 5, height = 4, units = "in", path = "figures/supp_figs/")
+
+########################### clean up
+invisible(rm(list = ls()))
+invisible(gc())
+
+
+
+
+########################### Figure 4 MTD rat ###########################
+
+########################### load dependencies
+########################### Custom Functions
+########################### Load Data
+ng_tox_mtd_rat <- read_excel("processed_data/supp_figs/ng_tox_mtd_rat.xlsx", 
+                             na = c("NA", "QNS"))
+########################### Data Wrangling
+ng_tox_mtd_rat$collection_time_hr <- as.factor(ng_tox_mtd_rat$collection_time_hr)
+ng_tox_mtd_rat$sample_number <- as.factor(ng_tox_mtd_rat$sample_number)
+ng_tox_mtd_rat$group <- as.factor(ng_tox_mtd_rat$group)
+ng_tox_mtd_rat$animal_num_glp <- as.factor(ng_tox_mtd_rat$animal_num_glp)
+
+ng_tox_mtd_rat$dose[ng_tox_mtd_rat$group==1] <- 'control'
+ng_tox_mtd_rat$dose[ng_tox_mtd_rat$group==2] <- '7mg/kg'
+ng_tox_mtd_rat$dose[ng_tox_mtd_rat$group==3] <- '12mg/kg'
+ng_tox_mtd_rat$dose[ng_tox_mtd_rat$group==4] <- '17mg/kg'
+ng_tox_mtd_rat$dose <- factor(ng_tox_mtd_rat$dose, levels=c('control', '7mg/kg', '12mg/kg', '17mg/kg'))
+
+ng_tox_mtd_rat_df<-
+  ng_tox_mtd_rat %>% 
+  filter( animal_num_glp != "986") %>%
+  filter( animal_num_glp != "983") %>%
+  filter( animal_num_glp != "960") %>%
+  filter( animal_num_glp != "984")
+
+ng_tox_mtd_rat_sum <- ng_tox_mtd_rat_df %>%
+  # select(day, weight,treatment) %>% 
+  filter(value != "NA") %>% 
+  group_by(dose,collection_time_hr, parameter) %>%
+  summarise(n = n(),
+            sd = sd(value),
+            value = mean(value)) %>%
+  mutate(sem = sd / sqrt(n - 1),
+         CI_lower = value + qt((1-0.95)/2, n - 1) * sem,
+         CI_upper = value - qt((1-0.95)/2, n - 1) * sem)
+
+
+########################### quick visualization
+color_list <- c("#3a34eb","#eb3434")
+
+figure4_rat_serum_tox<-ggplot(ng_tox_mtd_rat_df, aes(dose, value, color = collection_time_hr)) +
+  facet_wrap(~parameter,nrow=2, scales="free")+
+  geom_col(data = ng_tox_mtd_rat_sum, position = position_dodge(0.8), 
+           width = 0.7, alpha=0.4, aes(fill = collection_time_hr)) +
+  geom_jitter(
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.8)
+  ) +
+  
+  geom_errorbar(
+    aes(ymin = value-sd, ymax = value+sd), data = ng_tox_mtd_rat_sum, 
+    width = 0.2, position = position_dodge(0.8)
+  )+
+  scale_fill_manual(values=color_list) + 
+  scale_color_manual(values=color_list)+
+  theme_classic()+
+  stat_n_text(y.pos = -0.01, size = 3 )+
+  stat_compare_means(label = "p.format", size = 2)
+########################### saving figures
+ggsave(figure4_rat_serum_tox, file = "supp_fig_20_rat_serum_tox.pdf", width = 5, height = 4, units = "in", path = "figures/supp_figs/")
+
+########################### clean up
+invisible(rm(list = ls()))
+invisible(gc())
+
+
+
+
+########################### Figure 4 repeat dose tolerability rat###########################
+########################### load dependencies
+########################### Custom Functions
+########################### Load Data
+tox_rat <- read_excel("processed_data/supp_figs/rat_repeatDose_weights.xlsx", 
+                      na = c("NA", "QNS"))
+########################### Data Wrangling
+tox_rat_df<- tox_rat %>% 
+  filter(day < 15 )  %>%
+  filter(animalNum != "R0024_1") %>%
+  filter(animalNum != "R0025_0")
+
+tox_rat_mean <- tox_rat_df %>%
+  select(day, weight,treatment) %>% 
+  filter(weight != "NA") %>% 
+  group_by(treatment,day) %>%
+  summarise(n = n(),
+            mean = mean(weight),
+            median = median(weight),
+            sd = sd(weight)) %>%
+  mutate(sem = sd / sqrt(n - 1),
+         CI_lower = mean + qt((1-0.95)/2, n - 1) * sem,
+         CI_upper = mean - qt((1-0.95)/2, n - 1) * sem)
+
+### % change from baseline for individual
+tox_rat_df <- tox_rat_df %>% group_by(animalNum) %>% arrange(animalNum, day) %>% 
+  mutate(change = weight - first(weight))
+
+tox_rat_percent_change <- tox_rat_df %>%
+  filter(!is.na(change)) %>%
+  group_by(day, treatment) %>%
+  summarise(n = n(),
+            mean = mean(change),
+            median = median(change),
+            sd = sd(change)) %>%
+  mutate(sem = sd / sqrt(n - 1),
+         CI_lower = mean + qt((1-0.95)/2, n - 1) * sem,
+         CI_upper = mean - qt((1-0.95)/2, n - 1) * sem)
+
+
+########################### quick visualization
+color_list <- c("#3a34eb", "#808080", "#eb3434")
+
+figure4_rat_percentChange <- 
+  tox_rat_percent_change %>%
+  ggplot(aes(x=day, y=mean, color = treatment)) +
+  geom_line(aes(x=day, y=mean, color=treatment)) +
+  geom_ribbon(aes(ymin=mean-sd,ymax=mean+sd,fill=treatment),color=NA,alpha=0.4)+
+  # theme_light(base_size = 16) + 
+  theme_classic()+
+  # xlim(0,15) + 
+  ylim(-20, 20)+
+  # geom_vline(xintercept = 1)+
+  scale_fill_manual(values=color_list) + 
+  scale_color_manual(values=color_list)+
+  labs(title = "% weight change")+
+  xlab("Days post final infusion ")+
+  ylab("% weight change from baseline")+
+  theme(legend.position = c(0.17, 0.85),
+        legend.background = element_rect(fill = "white", color = "black"))
+########################### saving figures
+ggsave(figure4_rat_percentChange, file = "supp_fig_20_rat_percentChange.pdf", width = 6, height = 4, units = "in", path = "figures/supp_figs/")
+
+########################### clean up
+invisible(rm(list = ls()))
+invisible(gc())
+
+
+
+
+
+
+
+
+
+########################### Figure 4 toxicity cd1 ###########################
+
+
+########################### load dependencies
+########################### Custom Functions
+########################### Load Data
+tox_cd1 <- read_excel("processed_data/supp_figs/cd_1_weights.xlsx", 
+                      na = c("NA", "QNS"))
+########################### Data Wrangling
+tox_cd1_mean <- tox_cd1 %>%
+  filter(!is.na(weight)) %>%
+  group_by(day, treatment) %>%
+  summarise(n = n(),
+            mean = mean(weight),
+            median = median(weight),
+            sd = sd(weight)) %>%
+  mutate(sem = sd / sqrt(n - 1),
+         CI_lower = mean + qt((1-0.95)/2, n - 1) * sem,
+         CI_upper = mean - qt((1-0.95)/2, n - 1) * sem)
+
+### % change from baseline for individual
+tox_cd1 <- tox_cd1 %>% group_by(animalNum) %>% arrange(animalNum, day) %>% 
+  mutate(change = weight - first(weight))
+
+tox_cd1_percent_change <- tox_cd1 %>%
+  filter(!is.na(change)) %>%
+  group_by(day, treatment) %>%
+  summarise(n = n(),
+            mean = mean(change),
+            median = median(change),
+            sd = sd(change)) %>%
+  mutate(sem = sd / sqrt(n - 1),
+         CI_lower = mean + qt((1-0.95)/2, n - 1) * sem,
+         CI_upper = mean - qt((1-0.95)/2, n - 1) * sem)
+
+
+########################### quick visualization
+color_list <- c("#eb3434","#3a34eb")
+figure4_cd1_mean <-ggplot(tox_cd1_mean, aes(x=day, y=mean, color = treatment)) +
+  geom_line(aes(x=day, y=mean, color=treatment)) +
+  geom_ribbon(aes(ymin=CI_lower,ymax=CI_upper,fill=treatment),color=NA,alpha=0.4)+
+  # theme_light(base_size = 16) + 
+  theme_classic()+
+  xlim(0,15) + 
+  ylim(16,36) + 
+  # geom_vline(xintercept = 1)+
+  scale_fill_manual(values=color_list) + 
+  scale_color_manual(values=color_list)+
+  labs(title = "weight agross time")+
+  xlab("Days post final infusion ")+
+  ylab("weight (g)")+
+  theme(legend.position = c(0.15, 0.85),
+        legend.background = element_rect(fill = "white", color = "black"))
+
+figure4_cd1_percentChange <- ggplot(tox_cd1_percent_change, aes(x=day, y=mean, color = treatment)) +
+  geom_line(aes(x=day, y=mean, color=treatment)) +
+  geom_ribbon(aes(ymin=CI_lower,ymax=CI_upper,fill=treatment),color=NA,alpha=0.4)+
+  # theme_light(base_size = 16) + 
+  theme_classic()+
+  xlim(0,15) + 
+  ylim(-5, 5)+
+  # geom_vline(xintercept = 1)+
+  scale_fill_manual(values=color_list) + 
+  scale_color_manual(values=color_list)+
+  labs(title = "% weight change")+
+  xlab("Days post final infusion ")+
+  ylab("% weight change from baseline")+
+  theme(legend.position = c(0.15, 0.85),
+        legend.background = element_rect(fill = "white", color = "black"))
+########################### saving figures
+ggsave(figure4_cd1_percentChange, file = "supp_fig_19_cd1_percentChange.pdf", width = 6, height = 4, units = "in", path = "figures/supp_figs/")
+ggsave(figure4_cd1_mean, file = "supp_fig_19_cd1_mean.pdf", width = 6, height = 4, units = "in", path = "figures/supp_figs/")
+
+########################### clean up
+invisible(rm(list = ls()))
+invisible(gc())
+
+
+
 
 
 
