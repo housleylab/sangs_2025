@@ -58,23 +58,6 @@ heyCell_allData <- read_excel("processed_data/supp_figs/time_dependent_internal.
                               na = "NA")
 ########################### data wrangling
 ###########################  visualization
-heyCell_allData %>% 
-  filter(slideNum != 'background') %>%
-  ggbarplot( x = "incubationTime", y = "mean",
-             add = c("mean_se",  "jitter"),
-             color = "black",
-             fill = "incubationTime",
-             palette = "Blues",
-             width = 0.8,
-             add.params = list(size = .4),
-             position = position_dodge(0.4),
-  )+
-  theme(legend.position = "none")+
-  stat_compare_means(label.y = 27) +                                         # Global p-value
-  stat_compare_means(ref.group = "1", label = "p.signif",
-                     label.y = c(10, 13, 15, 22, 18))
-
-
 my_comparisons <- list( c("0", "1"),
                         c("1", "3"), 
                         c("3", "6"), 
@@ -104,10 +87,7 @@ invisible(rm(list = ls()))
 invisible(gc())
 
 
-
-
-
-########################### Figure 4 single dose tox porcine ###########################
+########################### Supp Fig 20 single dose tox porcine ###########################
 
 ########################### load dependencies
 ########################### Custom Functions
@@ -187,7 +167,7 @@ invisible(gc())
 
 
 
-########################### Figure 4 single dose tolerability cd1 ###########################
+########################### Supp Fig 19 single dose tolerability cd1 ###########################
 ########################### Load Data
 ng_tox_cd1 <- read_excel("processed_data/supp_figs/ng_tox_cd_1.xlsx", 
                          na = c("NA", "QNS"))
@@ -240,7 +220,7 @@ invisible(gc())
 
 
 
-########################### Figure 4 MTD rat ###########################
+########################### Supp Fig 20 MTD rat ###########################
 
 ########################### load dependencies
 ########################### Custom Functions
@@ -308,7 +288,7 @@ invisible(gc())
 
 
 
-########################### Figure 4 repeat dose tolerability rat###########################
+########################### Supp Fig 20 repeat dose tolerability rat###########################
 ########################### load dependencies
 ########################### Custom Functions
 ########################### Load Data
@@ -383,7 +363,7 @@ invisible(gc())
 
 
 
-########################### Figure 4 toxicity cd1 ###########################
+########################### Supp Fig 19 toxicity cd1 ###########################
 
 
 ########################### load dependencies
