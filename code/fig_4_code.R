@@ -93,7 +93,7 @@ scale_values <- function(x){(x-min(x))/(max(x)-min(x))}
 ########################### Figure 4c  ###########################
 ########################### rat biodistribution
 ########################### load data
-biodist_rat_crc <- read_excel("data/fig_4/raw_organ_biodistribution_rat.xlsx", 
+biodist_rat_crc <- read_excel("processed_data/fig_4/raw_organ_biodistribution_rat.xlsx", 
                                na = c("NA", "QNS"))
 ########################### data wrangling
 biodist_rat_crc <- biodist_rat_crc %>% filter(use == "yes")
@@ -125,7 +125,7 @@ rm(figure4c, figure4f, biodist_rat_crc_mean, biodist_rat_crc)
 ########################### Figure 4f   ###########################
 ########################### rat biodistribution
 ########################### load data
-biodist_rat_lung <- read_excel("data/fig_4/lung_biodist_database.xlsx", 
+biodist_rat_lung <- read_excel("processed_data/fig_4/lung_biodist_database.xlsx", 
                               na = c("NA", "QNS"))
 ########################### data wrangling
 biodist_rat_lung$condition <- as.factor(biodist_rat_lung$condition)
