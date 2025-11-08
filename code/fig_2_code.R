@@ -54,7 +54,7 @@ rm(package.check)
 ########################### Figure 2a-c & Supp Fig 7   ###########################
 ########################### description cell internalization and mechanism of entry
 ########################### load data
-heyCell_allData <- read_excel("data/fig_2/heyCell_allData.xlsx", 
+heyCell_allData <- read_excel("processed_data/fig_2/heyCell_allData.xlsx", 
                               na = "NA")
 
 ########################### data wrangling
@@ -157,7 +157,7 @@ rm(heyCell_ATPdependent, heyCell_Cpz, heyCell_cytoD, heyCell_LatA, heyCell_MBcd,
 ########################### description: siRNA release and colocalization of siRNA and endosomes
 
 ########################### load data
-sirnaEndosomColoc_allData <- read_excel("data/fig_2/heyCellsiRNAendosomeCOLOC.xlsx", 
+sirnaEndosomColoc_allData <- read_excel("processed_data/fig_2/heyCellsiRNAendosomeCOLOC.xlsx", 
                                         na = "NA")
 ########################### data wrangling
 sirnaEndosomColoc_allData$cell <- factor(sirnaEndosomColoc_allData$cell)
@@ -216,7 +216,7 @@ rm(siRNA_endosome_Fig, sirnaEndosomColoc_allData)
 ########################### Figure 2h siRNA release ###########################
 
 ########################### load data
-heyCellsiRNAsangsCOLOC_allData <- read_excel("data/fig_2/heyCellsiRNAsangsCOLOC.xlsx", 
+heyCellsiRNAsangsCOLOC_allData <- read_excel("processed_data/fig_2/heyCellsiRNAsangsCOLOC.xlsx", 
                                              na = "NA")
 ########################### data wrangling
 heyCellsiRNAsangsCOLOC_allData$cell <- factor(heyCellsiRNAsangsCOLOC_allData$cell)
@@ -247,7 +247,7 @@ rm(siRNA_endosome_Fig, heyCellsiRNAsangsCOLOC_allData, siRNA_sang_Fig)
 ########################### Figure 2i RNA knockdown in vitro ###########################
 
 ########################### load data
-rtPCR_data <- read_excel("data/fig_2/rtPCR_data.xlsx", 
+rtPCR_data <- read_excel("processed_data/fig_2/rtPCR_data.xlsx", 
                          na = "NA")
 ########################### visualization
 inVitroSANGexpression<-rtPCR_data %>% 
