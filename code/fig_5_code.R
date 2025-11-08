@@ -56,7 +56,7 @@ rm(package.check)
 ########################### Figure 5a and Figure 5b  ###########################
 
 ########################### load data
-rtPCR_data <- read_excel("data/fig_5/rtPCR_data.xlsx", 
+rtPCR_data <- read_excel("processed_data/fig_5/rtPCR_data.xlsx", 
                          na = "NA")
 ########################### data wrangling
 rtPCR_data$dose <- as.factor(rtPCR_data$dose)
